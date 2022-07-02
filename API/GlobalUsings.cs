@@ -19,3 +19,8 @@ global using System.IdentityModel.Tokens.Jwt;
 global using System.Text;
 global using Microsoft.AspNetCore.Authorization;
 global using API.DbInitializer;
+global using Microsoft.AspNetCore.Authentication.JwtBearer;
+global using API.Extensions;
+global using System.Text.Json;
+global using API.Middleware;
+
