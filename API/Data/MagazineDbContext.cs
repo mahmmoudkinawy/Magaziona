@@ -1,5 +1,5 @@
 ﻿namespace API.Data;
-public class MagazineDbContext : DbContext
+public class MagazineDbContext : IdentityDbContext<IdentityUser, IdentityRole, string>
 {
     public MagazineDbContext(DbContextOptions<MagazineDbContext> options) : base(options)
     { }
