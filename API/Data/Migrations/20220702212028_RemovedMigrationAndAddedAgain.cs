@@ -5,28 +5,23 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace API.Data.Migrations
 {
-    public partial class AddedIdentityTableToDb : Migration
+    public partial class RemovedMigrationAndAddedAgain : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropIndex(
-                name: "IX_Images_ArticleId",
-                table: "Images");
-
-            migrationBuilder.DeleteData(
-                table: "Articles",
-                keyColumn: "Id",
-                keyValue: new Guid("164bee47-ef9f-48c0-b07a-2eb5ad1bb73e"));
-
-            migrationBuilder.DeleteData(
-                table: "Articles",
-                keyColumn: "Id",
-                keyValue: new Guid("5542c0fa-4c3c-4eec-8e18-3ae07883d2b7"));
-
-            migrationBuilder.DeleteData(
-                table: "Articles",
-                keyColumn: "Id",
-                keyValue: new Guid("f9b78da2-b16d-4583-ab45-635f239dbac8"));
+            migrationBuilder.CreateTable(
+                name: "Articles",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Title = table.Column<string>(type: "TEXT", maxLength: 70, nullable: false),
+                    Contents = table.Column<string>(type: "TEXT", maxLength: 3000, nullable: false),
+                    Summary = table.Column<string>(type: "TEXT", maxLength: 300, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Articles", x => x.Id);
+                });
 
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
@@ -65,6 +60,26 @@ namespace API.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Images",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Url = table.Column<string>(type: "TEXT", nullable: false),
+                    PublishId = table.Column<string>(type: "TEXT", nullable: false),
+                    ArticleId = table.Column<Guid>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Images", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Images_Articles_ArticleId",
+                        column: x => x.ArticleId,
+                        principalTable: "Articles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -173,27 +188,6 @@ namespace API.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.InsertData(
-                table: "Articles",
-                columns: new[] { "Id", "Contents", "Summary", "Title" },
-                values: new object[] { new Guid("21b12eae-e51a-422f-9605-da62c09bb84c"), "This is content for article 3", "This is summary for article 3", "Testing bla bla 3" });
-
-            migrationBuilder.InsertData(
-                table: "Articles",
-                columns: new[] { "Id", "Contents", "Summary", "Title" },
-                values: new object[] { new Guid("3ebfb10d-0b09-4a8f-89b1-4829a969b3d7"), "This is content for article 2", "This is summary for article 2", "Testing bla bla 2" });
-
-            migrationBuilder.InsertData(
-                table: "Articles",
-                columns: new[] { "Id", "Contents", "Summary", "Title" },
-                values: new object[] { new Guid("8e3be64e-cc80-4700-aeff-77b5788f5a3b"), "This is content for article 1", "This is summary for article 1", "Testing bla bla 1" });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Images_ArticleId",
-                table: "Images",
-                column: "ArticleId",
-                unique: true);
-
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -230,6 +224,12 @@ namespace API.Data.Migrations
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Images_ArticleId",
+                table: "Images",
+                column: "ArticleId",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -250,49 +250,16 @@ namespace API.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Images");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
-            migrationBuilder.DropIndex(
-                name: "IX_Images_ArticleId",
-                table: "Images");
-
-            migrationBuilder.DeleteData(
-                table: "Articles",
-                keyColumn: "Id",
-                keyValue: new Guid("21b12eae-e51a-422f-9605-da62c09bb84c"));
-
-            migrationBuilder.DeleteData(
-                table: "Articles",
-                keyColumn: "Id",
-                keyValue: new Guid("3ebfb10d-0b09-4a8f-89b1-4829a969b3d7"));
-
-            migrationBuilder.DeleteData(
-                table: "Articles",
-                keyColumn: "Id",
-                keyValue: new Guid("8e3be64e-cc80-4700-aeff-77b5788f5a3b"));
-
-            migrationBuilder.InsertData(
-                table: "Articles",
-                columns: new[] { "Id", "Contents", "Summary", "Title" },
-                values: new object[] { new Guid("164bee47-ef9f-48c0-b07a-2eb5ad1bb73e"), "This is content for article 1", "This is summary for article 1", "Testing bla bla 1" });
-
-            migrationBuilder.InsertData(
-                table: "Articles",
-                columns: new[] { "Id", "Contents", "Summary", "Title" },
-                values: new object[] { new Guid("5542c0fa-4c3c-4eec-8e18-3ae07883d2b7"), "This is content for article 2", "This is summary for article 2", "Testing bla bla 2" });
-
-            migrationBuilder.InsertData(
-                table: "Articles",
-                columns: new[] { "Id", "Contents", "Summary", "Title" },
-                values: new object[] { new Guid("f9b78da2-b16d-4583-ab45-635f239dbac8"), "This is content for article 3", "This is summary for article 3", "Testing bla bla 3" });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Images_ArticleId",
-                table: "Images",
-                column: "ArticleId");
+            migrationBuilder.DropTable(
+                name: "Articles");
         }
     }
 }

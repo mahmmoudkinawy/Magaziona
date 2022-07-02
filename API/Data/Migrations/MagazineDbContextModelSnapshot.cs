@@ -41,29 +41,6 @@ namespace API.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Articles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("8e3be64e-cc80-4700-aeff-77b5788f5a3b"),
-                            Contents = "This is content for article 1",
-                            Summary = "This is summary for article 1",
-                            Title = "Testing bla bla 1"
-                        },
-                        new
-                        {
-                            Id = new Guid("3ebfb10d-0b09-4a8f-89b1-4829a969b3d7"),
-                            Contents = "This is content for article 2",
-                            Summary = "This is summary for article 2",
-                            Title = "Testing bla bla 2"
-                        },
-                        new
-                        {
-                            Id = new Guid("21b12eae-e51a-422f-9605-da62c09bb84c"),
-                            Contents = "This is content for article 3",
-                            Summary = "This is summary for article 3",
-                            Title = "Testing bla bla 3"
-                        });
                 });
 
             modelBuilder.Entity("API.Entities.ImageEntity", b =>

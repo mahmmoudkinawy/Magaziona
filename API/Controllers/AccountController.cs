@@ -32,9 +32,11 @@ public class AccountController : ControllerBase
             return BadRequest(ModelState);
         }
 
+        await _userManager.AddToRoleAsync(user, Constants.User);
+
         return Ok(new UserDto
         {
-            Token = _tokenService.CreateToken(user)
+            Token = await _tokenService.CreateTokenAsync(user)
         });
     }
 
@@ -51,7 +53,7 @@ public class AccountController : ControllerBase
 
         return Ok(new UserDto
         {
-            Token = _tokenService.CreateToken(user)
+            Token = await _tokenService.CreateTokenAsync(user)
         });
     }
 

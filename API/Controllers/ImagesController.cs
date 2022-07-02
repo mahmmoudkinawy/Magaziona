@@ -14,6 +14,7 @@ public class ImagesController : ControllerBase
     }
 
     [HttpPost("{articleId}/add-image")]
+    [Authorize(Roles = Constants.Admin)]
     public async Task<IActionResult> UploadImageForArticle([FromRoute] Guid articleId,
         [FromForm] IFormFile file)
     {
@@ -39,6 +40,7 @@ public class ImagesController : ControllerBase
     }
 
     [HttpDelete("{articleId}/remove-image-for-article")]
+    [Authorize(Roles = Constants.Admin)]
     public async Task<IActionResult> DeleteImageFor([FromRoute] Guid articleId)
     {
         var articleFromDb = await _magazineDbContext.Articles

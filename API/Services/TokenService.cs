@@ -2,16 +2,25 @@
 public class TokenService : ITokenService
 {
     private readonly IOptions<JwtSettings> _config;
+    private readonly UserManager<IdentityUser> _userManager;
 
-    public TokenService(IOptions<JwtSettings> config) => _config = config;
+    public TokenService(IOptions<JwtSettings> config, UserManager<IdentityUser> userManager)
+    {
+        _config = config;
+        _userManager = userManager;
+    }
 
-    public string CreateToken(IdentityUser user)
+    public async Task<string> CreateTokenAsync(IdentityUser user)
     {
         var claims = new List<Claim>
         {
             new(ClaimTypes.NameIdentifier, user.Id),
             new(ClaimTypes.Email, user.Email)
         };
+
+        var roles = await _userManager.GetRolesAsync(user);
+
+        claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
 
         var apiKeyValue = Encoding.ASCII.GetBytes(_config.Value.SecurityKey);
 

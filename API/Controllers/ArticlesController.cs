@@ -24,6 +24,7 @@ public class ArticlesController : ControllerBase
 
         return Ok(result);
     }
+
     [HttpGet("{id}", Name = "GetArticle")]
     public async Task<ActionResult<ArticleDto>> GetArticle([FromRoute] Guid id)
     {
@@ -38,6 +39,7 @@ public class ArticlesController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = Constants.Admin)]
     public async Task<ActionResult<ArticleDto>> PostArticle(
         [FromBody] ArticleForCreationDto articleForCreationDto)
     {
@@ -51,6 +53,7 @@ public class ArticlesController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [Authorize(Roles = Constants.Admin)]
     public async Task<IActionResult> PutArticle([FromRoute] Guid id,
         [FromBody] ArticleForUpdateDto articleForUpdateDto)
     {
@@ -72,6 +75,7 @@ public class ArticlesController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [Authorize(Roles = Constants.Admin)]
     public async Task<IActionResult> DeleteArticle([FromRoute] Guid id)
     {
         var articleFromDb = await _magazineDbContext.Articles.FindAsync(id);
