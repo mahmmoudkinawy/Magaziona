@@ -5,4 +5,5 @@ public class ArticleDto
     public string Title { get; set; }
     public string Contents { get; set; }
     public string Summary { get; set; }
+    public string ImageUrl { get; set; }
 }

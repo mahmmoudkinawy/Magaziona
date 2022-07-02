@@ -3,6 +3,7 @@ using System;
 using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(MagazineDbContext))]
-    partial class MagazineDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220702182839_AddedImageEntityToDb")]
+    partial class AddedImageEntityToDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.6");
@@ -45,60 +47,25 @@ namespace API.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("164bee47-ef9f-48c0-b07a-2eb5ad1bb73e"),
+                            Id = new Guid("31c3a76c-e04c-4cd4-a324-40595a1a9a2d"),
                             Contents = "This is content for article 1",
                             Summary = "This is summary for article 1",
                             Title = "Testing bla bla 1"
                         },
                         new
                         {
-                            Id = new Guid("5542c0fa-4c3c-4eec-8e18-3ae07883d2b7"),
+                            Id = new Guid("30bca8b2-f61c-4125-b71e-9ec62ffc293e"),
                             Contents = "This is content for article 2",
                             Summary = "This is summary for article 2",
                             Title = "Testing bla bla 2"
                         },
                         new
                         {
-                            Id = new Guid("f9b78da2-b16d-4583-ab45-635f239dbac8"),
+                            Id = new Guid("f9135489-0aaa-4b64-ab9f-e49107177ac4"),
                             Contents = "This is content for article 3",
                             Summary = "This is summary for article 3",
                             Title = "Testing bla bla 3"
                         });
-                });
-
-            modelBuilder.Entity("API.Entities.ImageEntity", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("ArticleId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("PublishId")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Url")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ArticleId");
-
-                    b.ToTable("Images");
-                });
-
-            modelBuilder.Entity("API.Entities.ImageEntity", b =>
-                {
-                    b.HasOne("API.Entities.ArticleEntity", "ArticleEntity")
-                        .WithMany()
-                        .HasForeignKey("ArticleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ArticleEntity");
                 });
 #pragma warning restore 612, 618
         }

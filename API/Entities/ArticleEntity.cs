@@ -17,4 +17,6 @@ public class ArticleEntity
     [MaxLength(300)]
     [MinLength(30)]
     public string Summary { get; set; }
+
+    public ImageEntity Image { get; set; }
 }

@@ -15,16 +15,26 @@ public class ArticlesController : ControllerBase
 
     [HttpGet]
     public async Task<ActionResult<IEnumerable<ArticleDto>>> GetArticles()
-        => Ok(_mapper.Map<IEnumerable<ArticleDto>>(await _magazineDbContext.Articles.AsNoTracking().ToListAsync()));
+    {
+        var result = _mapper.Map<IEnumerable<ArticleDto>>(
+            await _magazineDbContext.Articles
+            .Include(i => i.Image)
+            .AsNoTracking()
+            .ToListAsync());
 
+        return Ok(result);
+    }
     [HttpGet("{id}", Name = "GetArticle")]
     public async Task<ActionResult<ArticleDto>> GetArticle([FromRoute] Guid id)
     {
-        var articleFromDb = await _magazineDbContext.Articles.FindAsync(id);
+        var articleFromDb = await _magazineDbContext.Articles
+            .Include(i => i.Image)
+            .AsNoTracking()
+            .FirstOrDefaultAsync(a => a.Id == id);
 
         if (articleFromDb == null) return NotFound();
 
-        return Ok(articleFromDb);
+        return Ok(_mapper.Map<ArticleDto>(articleFromDb));
     }
 
     [HttpPost]

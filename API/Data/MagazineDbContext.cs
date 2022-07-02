@@ -5,6 +5,7 @@ public class MagazineDbContext : DbContext
     { }
 
     public DbSet<ArticleEntity> Articles { get; set; }
+    public DbSet<ImageEntity> Images { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
