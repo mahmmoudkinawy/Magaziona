@@ -59,6 +59,7 @@ public class AccountController : ControllerBase
 
 }
 
+//Will be refactored later
 public class UserDto
 {
     public string Token { get; set; }
